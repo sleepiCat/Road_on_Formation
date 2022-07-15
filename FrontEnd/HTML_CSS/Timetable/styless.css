@@ -1,0 +1,70 @@
+/* write css here */
+.flex-container {
+    display: flex;
+  
+    flex-wrap: wrap;
+  }
+  .flex-container > * {
+    flex: 1 1 16.66%;
+  
+    box-sizing: border-box;
+    border: 1px solid black;
+  }
+  
+  #head {
+    text-align: center;
+    color: white;
+  }
+  
+  .d {
+    border: none;
+  }
+  
+  .blank {
+    background-color: #ff0066;
+    flex: 0 0 100%;
+    font-weight: bold;
+    font-style: italic;
+    color: black;
+    padding: 6px;
+  }
+  .c1 {
+    background-color: #aaaaff;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+  .c2 {
+    background-color: #aaaaff;
+    color: black;
+    text-align: center;
+  }
+  .c3 {
+    background-color: #aaaaff;
+    color: black;
+  }
+  .c4 {
+    background-color: #aaaaff;
+    color: black;
+  }
+  .c5 {
+    background-color: #aaaaff;
+    color: black;
+  }
+  .period {
+    background-color: #ff0066;
+    color: black;
+    text-align: center;
+  }
+  
+  .subject {
+    margin-top: 9%;
+    background-color: #aaaaff;
+    font-size: 12pt;
+    margin-bottom: 4px;
+  }
+  
+  .room {
+    font-size: 10pt;
+    font-style: italic;
+  }

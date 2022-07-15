@@ -41,8 +41,8 @@ const element = <Welcome name="Sara" />;
 
 //JSX attributes and children are passed to component as a single object called props
 
-const root = ReactDOM.createRoot(document.getElementById('root2'));
-root.render(element);
+/*const root = ReactDOM.createRoot(document.getElementById('root2'));*/
+/*root.render(element);*/
 
 /*
 1. We call root.render() with the <Welcome name="Sara" /> element.
@@ -67,7 +67,7 @@ function Name(props) {
     return <h1>props.user.name</h1>
 }
 
-root.render(<div><Name user={props.author}/></div>);
+/*root.render(<div><Name user={props.author}/></div>);*/
 
 
 ///////////////////////////////////////////////////////////////
@@ -120,19 +120,27 @@ class Comment_text extends React.Component{
     }
 
 }
+
+class Comment_date extends React.Component{
+    render() {
+        return (
+            <div className="Comment-date">
+          {formatDate(props.comment.date)}
+        </div>
+        )
+    }
+}
+
 function Comment(props) {
     return (
       <div className="Comment">
           <Avatar user={props.author} />
         <Comment_text comment={props.text} />
-        <div className="Comment-date">
-          {formatDate(props.date)}
-        </div>
+        <Comment_date comment={props.date} />
       </div>
     );
   }
 
 //State and LifeCycle
 
-const root3 = ReactDOM.createRoot(document.getElementById("root"));
 
