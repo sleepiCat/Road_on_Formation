@@ -1,169 +1,133 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState , useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import './test.css'
-//hooks can only be used inside function components 
-//class components have another way to do a similar action
+import Row from "./Row.js";
 
-//function App(props) {
 
-//   const [resourceType, setResourceType] = useState('posts')
-//   const [items, setItems] = useState([])//empty array by deffault
-
-// console.log("render")
-//   //do some form of side effect when something changes
-//   useEffect(() => { //executes every single time app renders
-//     fetch(`https://jsonplaceholder.typicode.com/${resourceType}`)
-//   .then(response => response.json())
-//   .then(json => setItems(json))
-//   }, [resourceType]) //second parameter of array with values, useEffect will run if anything in array changes
-
-//   return(
-//     <>
-//     <div>
-//       <button onClick={() => setResourceType(()=> 'posts')}>Posts</button>
-//       <button onClick={() => setResourceType('users')}>Users</button>
-//       <button onClick={() => setResourceType('comments')}>Comments</button>
-//     </div>
-//     <h1>{resourceType}</h1>
-//     {items.map(item => {
-//       return <pre>{JSON.stringify(item)}</pre>
-//     })}
-//     </>
-//   )
-
-// const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
-// const handleResize = () => {
-//   setWindowWidth(window.innerWidth)
-// }
-
-// useEffect(() => {
-//   window.addEventListener('resize', handleResize)
-
-//   return () => {
-//     console.log("return from resource change")
-//     window.removeEventListener('resize',handleResize)
+//class component
+// export default class Greeting extends React.Component{
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       name: 'Mary',
+//       surname: 'Poppins',
+//       width: window.innerWidth
+//     }//couple more bindings
+//     this.handleNameChange = this.handleNameChange.bind(this);
 //   }
-// }, [])
+      // componentDidMount() {
+      //   document.title = this.state.name + ' ' + this.state.surname;
+      // window.addEventListener('resize', this.handleResize);
+    //}
+
+      // componentDidUpdate() {
+      //   document.title = this.state.name + ' ' + this.state.surname;
+      // }
 
 
-// return (
-//   <div>{windowWidth}</div>
-// )
+      // componentWillUnmount() {
+      //   window.removeEventListener('resize', this.handleResize);
+      // }
+      // handleResize() {
+      //   this.setState({
+      //     width: window.innerWidth
+      //   });
+      // }
+
+//   handleNameChange(e) {
+//     this.setState({
+//       name : e.target.value
+//     })
+//   }
+
+//   render () {
+//     return (
+//       <section>
+//           <Row label="Name">
+//               <input
+//                 value={this.state.name}
+//                 onChange={this.handleNameChange}
+//               />
+
+//           </Row>
+//       </section>
+//   )
+//   }
 // }
 
-function formatName(user) {
-  return user.firstName + " " + user.lastName;
-}
-
-const user = {
-  firstName: 'Tim',
-  lastName: 'Yuen'
-}
-
-function greeting(user) {
-  if (user.firstName){
-  return (
-    <h1>Hello, {formatName(user)}!</h1>
-  )
-  }
-  else {
-    return (<p>Hello, Stranger {user}!<span>Welcome </span></p>)
-  }
-}
-const t = "tim";
+//function component
 
 
-//function component of Test takes in props: children or jsx attributes
-function Test(props) { 
 
-  //testing if I can access the final string with dot notation
-  const array = props.children.props.children.props.children;
-  console.log(array);
-  //returns array 
-  return array
+function Greeting(props) {
+  const [name, setName] = useState('Mary');
+  const [surName, setSurName] = useState('Poppin');
+
+  useEffect(() => {
+    document.title = name + ' ' + surName;
+  })
+
+
+  //custom hooks
+  const width = useWindowWidth();
   
-}
-const element1 = <Test><div>{greeting(t)}</div></Test>; //the children of Test,<div>, are passed as props
-
-function Welcome(props){
-  return <h1>Hello props.name, {props.name}</h1>
-}
-
-const nameArray = ["Tim","Sam", "Mel", "Susan"];
-
-
-function Repeat(props) {
   
-  console.log(props.names);
+  function handleNameChange(e) {
+    console.log(e);
+    setName(e.target.value);
+  }
+  
+  function handleSurnameChange(e) {
+    setSurName(e.target.value);
+  }
+  
+  
   return (
-    <div>
-      <Welcome name={props.names[0]} />
-      <Welcome name={props.names[1]}/>
-      <Welcome name={props.names[2]} />
-      <Welcome name={props.names[3]} />
-    </div>
+    <section>
+      <Row label="Name">
+        <input
+        value={name}
+        onChange={handleNameChange}
+        />
+      </Row>
+      <Row label="Surname">
+        <input
+        value={surName}
+        onChange={handleSurnameChange}
+        />
+      </Row>
+      <Row label="Width">
+        {width}
+      </Row>
+    </section>
   )
 }
 
 
-//props is passed as a single object= {name:"Tim"}
-const element2 = <Repeat names={nameArray}/>;
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-//STATE AND LIFECYCLE OF REACT
-
-
-
-
-//ReactDOM updates the DOM to match element
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-class Clock extends React.Component{
-  constructor(props) {
-    super(props);
-    //this.state is init with obj of current time
-    this.state = {date: new Date()}; 
-  }
-
-  //runs after the component output has been rendered to the DOM
-componentDidMount() {
-  //timerID is an additional field to store states that 
-  //are not part of the typical Data flow
-  console.log("mounted");
-  this.timerID = setInterval(() => this.tick(), 1000);
-}
-//this lifecycle method removes timer
-componentWillUnmount() {
-  console.log("unmounted");
-  clearInterval(this.timerID);
-}
-
-tick() {
-  console.log("hello"); 
-  this.setState({
-    date: new Date()
+    //optional cleanup function
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   });
- }
-  render(){
-    return (
-    <div>
-      <h1>Hello, World!</h1>
-      {/* <h2>It is {new Date().toLocaleTimeString()}.</h2> */}
-      <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-    </div>
-  )
-  }
+  return width;
 }
 
-
-// function foo() {
-//   const element = <Clock date={new Date()}/>
-//   root.render(element);
+// function Greeting(props) {
+//   //console.log(props);
+//     return (
+//         <section>
+//             <Row label="Name">
+//                 {props.name}
+//             </Row>
+//         </section>
+//     )
 // }
 
-// setInterval(foo,1000);
 
-
-
-root.render(<Clock />);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Greeting/>);
