@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+body > *:nth-child(1) {
+    flex: 1 1 70%;
+    min-width: 30ch;
+}
+body > *:nth-child(2) {
+    flex: 1 1 25%;
+    min-width: 20ch;
+}
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}    
+
+.second-container{
+    width: min-content;
+}
+img {
+    width: 200px;
+    height: 200px;
+}
+
+/* @media (min-width: 40rem){
+    body{
+        flex-direction: row;
+    }
+} */
+
